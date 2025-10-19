@@ -325,7 +325,9 @@ const Index = () => {
                     <h3 className={cn("font-medium text-lg", isDarkMode ? "text-white" : "")}>Иван Иванов</h3>
                     <p className={cn("text-sm", isDarkMode ? "text-gray-400" : "text-muted-foreground")}>@ivan_ivanov</p>
                   </div>
-                  <Button variant="outline" className="rounded-full">Редактировать</Button>
+                  <Button variant="outline" size="icon" className="rounded-full">
+                    <Icon name="Pencil" size={18} />
+                  </Button>
                 </div>
               </div>
 
@@ -349,8 +351,8 @@ const Index = () => {
                     )}
                   >
                     <div className={cn(
-                      'w-6 h-6 rounded-full bg-white absolute top-1 transition-transform shadow-md',
-                      isDarkMode ? 'translate-x-7' : 'translate-x-1'
+                      'w-6 h-6 rounded-full absolute top-1 transition-transform shadow-md',
+                      isDarkMode ? 'bg-gray-900 translate-x-7' : 'bg-white translate-x-1'
                     )} />
                   </button>
                 </div>
