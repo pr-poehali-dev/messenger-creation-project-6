@@ -105,10 +105,10 @@ const Index = () => {
                 </AvatarFallback>
               </Avatar>
               <div>
-                <h2 className="font-medium text-foreground">
+                <h2 className={cn("font-medium", isDarkMode ? "text-white" : "text-foreground")}>
                   {chats.find(c => c.id === selectedChat)?.name}
                 </h2>
-                <p className="text-xs text-muted-foreground">
+                <p className={cn("text-xs", isDarkMode ? "text-gray-300" : "text-muted-foreground")}>
                   {chats.find(c => c.id === selectedChat)?.online ? 'в сети' : 'был(а) недавно'}
                 </p>
               </div>
@@ -143,7 +143,7 @@ const Index = () => {
                     )}
                   >
                     <p className="text-sm leading-relaxed">{message.text}</p>
-                    <span className="text-xs opacity-70 mt-1 block text-right">
+                    <span className={cn("text-xs mt-1 block text-right", message.isMine ? "opacity-80" : isDarkMode ? "text-gray-300 opacity-70" : "opacity-70")}>
                       {message.time}
                     </span>
                   </div>
@@ -193,14 +193,14 @@ const Index = () => {
         <div className="flex-1 flex flex-col h-full overflow-hidden">
           <div className="p-6">
             <div className="relative">
-              <Icon name="Search" size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" />
+              <Icon name="Search" size={20} className={cn("absolute left-4 top-1/2 -translate-y-1/2", isDarkMode ? "text-gray-400" : "text-muted-foreground")} />
               <Input
                 placeholder="Поиск"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className={cn(
                   "pl-12 border-0 rounded-full liquid-shine",
-                  isDarkMode ? "glass-morphism-dark text-white placeholder:text-gray-400" : "glass-morphism-light"
+                  isDarkMode ? "glass-morphism-dark text-white placeholder:text-gray-500" : "glass-morphism-light"
                 )}
               />
             </div>
@@ -218,7 +218,7 @@ const Index = () => {
                       {story.avatar}
                     </div>
                   </div>
-                  <span className="text-xs text-muted-foreground max-w-[70px] truncate text-center">
+                  <span className={cn("text-xs max-w-[70px] truncate text-center", isDarkMode ? "text-gray-300" : "text-muted-foreground")}>
                     {story.name}
                   </span>
                 </div>
@@ -250,10 +250,10 @@ const Index = () => {
 
                   <div className="flex-1 min-w-0">
                     <div className="flex justify-between items-baseline mb-1">
-                      <h3 className="font-medium text-foreground truncate">{chat.name}</h3>
-                      <span className="text-xs text-muted-foreground ml-2 flex-shrink-0">{chat.time}</span>
+                      <h3 className={cn("font-medium truncate", isDarkMode ? "text-white" : "text-foreground")}>{chat.name}</h3>
+                      <span className={cn("text-xs ml-2 flex-shrink-0", isDarkMode ? "text-gray-400" : "text-muted-foreground")}>{chat.time}</span>
                     </div>
-                    <p className="text-sm text-muted-foreground truncate">{chat.lastMessage}</p>
+                    <p className={cn("text-sm truncate", isDarkMode ? "text-gray-400" : "text-muted-foreground")}>{chat.lastMessage}</p>
                   </div>
 
                   {chat.unread && (
@@ -274,8 +274,8 @@ const Index = () => {
         <div className="flex-1 overflow-y-auto p-6">
           <div className="max-w-2xl mx-auto space-y-6">
             <div>
-              <h1 className="text-3xl font-bold mb-2">Настройки</h1>
-              <p className="text-muted-foreground">Управление вашим аккаунтом и приложением</p>
+              <h1 className={cn("text-3xl font-bold mb-2", isDarkMode ? "text-white" : "")}>Настройки</h1>
+              <p className={cn(isDarkMode ? "text-gray-400" : "text-muted-foreground")}>Управление вашим аккаунтом и приложением</p>
             </div>
 
             <div className={cn(
@@ -283,29 +283,29 @@ const Index = () => {
               isDarkMode ? "glass-morphism-dark" : "glass-morphism-light"
             )}>
               <div>
-                <h2 className="text-lg font-semibold mb-4">Профиль</h2>
+                <h2 className={cn("text-lg font-semibold mb-4", isDarkMode ? "text-white" : "")}>Профиль</h2>
                 <div className="flex items-center gap-4 mb-4">
                   <Avatar className="w-20 h-20">
                     <AvatarFallback className="text-3xl bg-gradient-to-br from-blue-400 to-blue-600">👤</AvatarFallback>
                   </Avatar>
                   <div className="flex-1">
-                    <h3 className="font-medium text-lg">Иван Иванов</h3>
-                    <p className="text-sm text-muted-foreground">@ivan_ivanov</p>
+                    <h3 className={cn("font-medium text-lg", isDarkMode ? "text-white" : "")}>Иван Иванов</h3>
+                    <p className={cn("text-sm", isDarkMode ? "text-gray-400" : "text-muted-foreground")}>@ivan_ivanov</p>
                   </div>
                   <Button variant="outline" className="rounded-full">Редактировать</Button>
                 </div>
               </div>
 
               <div className="border-t pt-6">
-                <h2 className="text-lg font-semibold mb-4">Внешний вид</h2>
+                <h2 className={cn("text-lg font-semibold mb-4", isDarkMode ? "text-white" : "")}>Внешний вид</h2>
                 <div className="flex items-center justify-between py-3">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
                       <Icon name={isDarkMode ? 'Moon' : 'Sun'} size={20} className="text-primary" />
                     </div>
                     <div>
-                      <h3 className="font-medium">Тёмная тема</h3>
-                      <p className="text-sm text-muted-foreground">Изменить цветовую схему</p>
+                      <h3 className={cn("font-medium", isDarkMode ? "text-white" : "")}>Тёмная тема</h3>
+                      <p className={cn("text-sm", isDarkMode ? "text-gray-400" : "text-muted-foreground")}>Изменить цветовую схему</p>
                     </div>
                   </div>
                   <button
@@ -324,7 +324,7 @@ const Index = () => {
               </div>
 
               <div className="border-t pt-6 space-y-3">
-                <h2 className="text-lg font-semibold mb-4">Уведомления</h2>
+                <h2 className={cn("text-lg font-semibold mb-4", isDarkMode ? "text-white" : "")}>Уведомления</h2>
                 {[
                   { icon: 'Bell', title: 'Уведомления о сообщениях', description: 'Получать push-уведомления' },
                   { icon: 'Volume2', title: 'Звуки', description: 'Звук при получении сообщений' },
@@ -336,8 +336,8 @@ const Index = () => {
                         <Icon name={item.icon} size={20} className="text-primary" />
                       </div>
                       <div>
-                        <h3 className="font-medium">{item.title}</h3>
-                        <p className="text-sm text-muted-foreground">{item.description}</p>
+                        <h3 className={cn("font-medium", isDarkMode ? "text-white" : "")}>{item.title}</h3>
+                        <p className={cn("text-sm", isDarkMode ? "text-gray-400" : "text-muted-foreground")}>{item.description}</p>
                       </div>
                     </div>
                     <button className="w-14 h-8 rounded-full bg-gray-300 relative">
@@ -348,7 +348,7 @@ const Index = () => {
               </div>
 
               <div className="border-t pt-6 space-y-3">
-                <h2 className="text-lg font-semibold mb-4">Конфиденциальность</h2>
+                <h2 className={cn("text-lg font-semibold mb-4", isDarkMode ? "text-white" : "")}>Конфиденциальность</h2>
                 {[
                   { icon: 'Lock', title: 'Статус онлайн', description: 'Кто видит когда вы в сети' },
                   { icon: 'Eye', title: 'Прочитанные', description: 'Отправлять отметки о прочтении' },
@@ -359,8 +359,8 @@ const Index = () => {
                       <Icon name={item.icon} size={20} className="text-primary" />
                     </div>
                     <div className="flex-1 text-left">
-                      <h3 className="font-medium">{item.title}</h3>
-                      <p className="text-sm text-muted-foreground">{item.description}</p>
+                      <h3 className={cn("font-medium", isDarkMode ? "text-white" : "")}>{item.title}</h3>
+                      <p className={cn("text-sm", isDarkMode ? "text-gray-400" : "text-muted-foreground")}>{item.description}</p>
                     </div>
                     <Icon name="ChevronRight" size={20} className="text-muted-foreground" />
                   </button>
@@ -386,10 +386,10 @@ const Index = () => {
             <Icon name={menuItems.find(item => item.id === activeSection)?.icon || 'MessageCircle'} size={64} className="text-primary/30" />
           </div>
           <div>
-            <h3 className="text-xl font-medium text-muted-foreground mb-2">
+            <h3 className={cn("text-xl font-medium mb-2", isDarkMode ? "text-gray-400" : "text-muted-foreground")}>
               {menuItems.find(item => item.id === activeSection)?.label}
             </h3>
-            <p className="text-sm text-muted-foreground">
+            <p className={cn("text-sm", isDarkMode ? "text-gray-500" : "text-muted-foreground")}>
               Раздел в разработке
             </p>
           </div>
@@ -402,10 +402,13 @@ const Index = () => {
     <div className={cn(
       "flex flex-col h-screen overflow-hidden transition-colors duration-500 relative",
       isDarkMode 
-        ? "bg-gradient-to-br from-indigo-950 via-purple-950 to-pink-950" 
+        ? "bg-gradient-to-br from-gray-950 via-gray-900 to-black text-white" 
         : "bg-gradient-to-br from-blue-100 via-purple-50 to-pink-100"
     )}>
-      <div className="absolute inset-0 liquid-gradient opacity-30 pointer-events-none" />
+      <div className={cn(
+        "absolute inset-0 liquid-gradient pointer-events-none",
+        isDarkMode ? "opacity-10" : "opacity-30"
+      )} />
       <div className="flex-1 overflow-hidden">
         {renderContent()}
       </div>
