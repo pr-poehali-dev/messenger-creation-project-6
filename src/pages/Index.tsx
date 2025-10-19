@@ -88,52 +88,44 @@ const Index = () => {
   );
 
   return (
-    <div className="flex h-screen bg-telegram-light-bg">
-      <div className="w-20 bg-white border-r border-border flex flex-col items-center py-4 gap-4">
-        <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold text-lg cursor-pointer hover:opacity-90 transition-opacity">
-          T
-        </div>
-        
-        <div className="flex-1 flex flex-col gap-2 w-full items-center">
+    <div className="flex h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50 relative pb-20">
+      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 animate-slide-up">
+        <div className="bg-white/70 backdrop-blur-2xl shadow-2xl rounded-full px-6 py-3 flex items-center gap-2 border border-white/40">
           {menuItems.map((item) => (
             <button
               key={item.id}
               onClick={() => setActiveSection(item.id)}
               className={cn(
-                'w-12 h-12 rounded-xl flex items-center justify-center transition-all relative group',
+                'w-12 h-12 rounded-full flex items-center justify-center transition-all relative group',
                 activeSection === item.id
-                  ? 'bg-primary text-white'
-                  : 'text-muted-foreground hover:bg-secondary'
+                  ? 'bg-primary text-white shadow-lg scale-110'
+                  : 'text-gray-600 hover:bg-white/60 hover:scale-105'
               )}
               title={item.label}
             >
-              <Icon name={item.icon} size={24} />
-              <span className="absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+              <Icon name={item.icon} size={20} />
+              <span className="absolute bottom-full mb-3 px-3 py-1.5 bg-gray-900/90 backdrop-blur-sm text-white text-xs rounded-xl opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-lg">
                 {item.label}
               </span>
             </button>
           ))}
         </div>
-
-        <button className="w-12 h-12 rounded-xl flex items-center justify-center text-muted-foreground hover:bg-secondary transition-all">
-          <Icon name="Moon" size={24} />
-        </button>
       </div>
 
-      <div className="w-96 bg-white border-r border-border flex flex-col">
-        <div className="p-4 border-b border-border">
+      <div className="w-96 bg-white/50 backdrop-blur-sm flex flex-col">
+        <div className="p-4">
           <div className="relative">
             <Icon name="Search" size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
             <Input
               placeholder="Поиск"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 bg-secondary border-0"
+              className="pl-10 bg-white/60 backdrop-blur-sm border-0 rounded-full"
             />
           </div>
         </div>
 
-        <div className="px-4 py-3 border-b border-border">
+        <div className="px-4 py-3">
           <ScrollArea className="w-full">
             <div className="flex gap-3 pb-2">
               {stories.map((story) => (
@@ -161,8 +153,8 @@ const Index = () => {
               key={chat.id}
               onClick={() => setSelectedChat(chat.id)}
               className={cn(
-                'flex items-center gap-3 px-4 py-3 cursor-pointer transition-colors border-b border-border/50 animate-fade-in',
-                selectedChat === chat.id ? 'bg-primary/10' : 'hover:bg-secondary'
+                'flex items-center gap-3 px-4 py-3 cursor-pointer transition-all animate-fade-in rounded-2xl mx-2 mb-2',
+                selectedChat === chat.id ? 'bg-white/80 backdrop-blur-sm shadow-md' : 'hover:bg-white/40'
               )}
             >
               <div className="relative">
@@ -194,10 +186,10 @@ const Index = () => {
         </ScrollArea>
       </div>
 
-      <div className="flex-1 flex flex-col bg-[#f5f7fa]">
+      <div className="flex-1 flex flex-col">
         {selectedChat ? (
           <>
-            <div className="h-16 bg-white border-b border-border flex items-center justify-between px-6">
+            <div className="h-16 bg-white/50 backdrop-blur-sm flex items-center justify-between px-6 rounded-t-3xl mt-4 mx-4">
               <div className="flex items-center gap-3">
                 <Avatar className="w-10 h-10">
                   <AvatarFallback className="text-xl bg-gradient-to-br from-blue-400 to-blue-600">
@@ -242,10 +234,10 @@ const Index = () => {
                   >
                     <div
                       className={cn(
-                        'max-w-[70%] rounded-2xl px-4 py-2 shadow-sm',
+                        'max-w-[70%] rounded-2xl px-4 py-2 shadow-md backdrop-blur-sm',
                         message.isMine
-                          ? 'bg-[#dcf8c6] text-foreground rounded-br-sm'
-                          : 'bg-white text-foreground rounded-bl-sm'
+                          ? 'bg-primary/90 text-white rounded-br-sm'
+                          : 'bg-white/80 text-foreground rounded-bl-sm'
                       )}
                     >
                       <p className="text-sm leading-relaxed">{message.text}</p>
@@ -258,7 +250,7 @@ const Index = () => {
               </div>
             </ScrollArea>
 
-            <div className="bg-white border-t border-border px-6 py-4">
+            <div className="bg-white/50 backdrop-blur-sm px-6 py-4 rounded-b-3xl mx-4 mb-4">
               <div className="flex items-center gap-3 max-w-4xl mx-auto">
                 <Button variant="ghost" size="icon" className="rounded-full flex-shrink-0">
                   <Icon name="Smile" size={22} />
@@ -272,7 +264,7 @@ const Index = () => {
                   value={messageInput}
                   onChange={(e) => setMessageInput(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                  className="flex-1 bg-secondary border-0 rounded-full px-4"
+                  className="flex-1 bg-white/60 backdrop-blur-sm border-0 rounded-full px-4"
                 />
 
                 <Button 
