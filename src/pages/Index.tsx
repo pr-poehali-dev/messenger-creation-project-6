@@ -186,15 +186,15 @@ const Index = () => {
           </div>
 
           <div className={cn(
-            "px-6 py-4 rounded-b-3xl liquid-shine",
+            "fixed bottom-0 left-0 right-0 px-6 py-3 rounded-b-3xl liquid-shine",
             isDarkMode ? "glass-morphism-dark" : "glass-morphism-light"
           )}>
-            <div className="flex items-center gap-3 max-w-4xl mx-auto">
-              <Button variant="ghost" size="icon" className="rounded-full flex-shrink-0">
-                <Icon name="Smile" size={22} />
+            <div className="flex items-center gap-2 max-w-4xl mx-auto">
+              <Button variant="ghost" size="icon" className="rounded-full flex-shrink-0 h-9 w-9">
+                <Icon name="Smile" size={20} />
               </Button>
-              <Button variant="ghost" size="icon" className="rounded-full flex-shrink-0">
-                <Icon name="Paperclip" size={22} />
+              <Button variant="ghost" size="icon" className="rounded-full flex-shrink-0 h-9 w-9">
+                <Icon name="Paperclip" size={20} />
               </Button>
               
               <Input
@@ -203,7 +203,7 @@ const Index = () => {
                 onChange={(e) => setMessageInput(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                 className={cn(
-                  "flex-1 border-0 rounded-full px-4 liquid-shine",
+                  "flex-1 border-0 rounded-full px-4 h-9 liquid-shine",
                   isDarkMode ? "glass-morphism-dark text-white" : "glass-morphism-light"
                 )}
               />
@@ -211,9 +211,9 @@ const Index = () => {
               <Button 
                 onClick={handleSendMessage}
                 size="icon" 
-                className="rounded-full flex-shrink-0 bg-primary hover:bg-primary/90"
+                className="rounded-full flex-shrink-0 bg-primary hover:bg-primary/90 h-9 w-9"
               >
-                <Icon name="Send" size={20} />
+                <Icon name="Send" size={18} />
               </Button>
             </div>
           </div>
