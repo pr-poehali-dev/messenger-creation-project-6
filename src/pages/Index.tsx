@@ -92,8 +92,8 @@ const Index = () => {
       return (
         <div className="flex-1 flex flex-col h-full">
           <div className={cn(
-            "backdrop-blur-sm flex items-center justify-between px-6 py-4 rounded-t-3xl",
-            isDarkMode ? "bg-gray-800/50" : "bg-white/50"
+            "flex items-center justify-between px-6 py-4 rounded-t-3xl liquid-shine",
+            isDarkMode ? "glass-morphism-dark" : "glass-morphism-light"
           )}>
             <div className="flex items-center gap-3">
               <button onClick={() => setSelectedChat(null)} className="lg:hidden">
@@ -136,10 +136,10 @@ const Index = () => {
                 >
                   <div
                     className={cn(
-                      'max-w-[70%] rounded-2xl px-4 py-2 shadow-md backdrop-blur-sm',
+                      'max-w-[70%] rounded-2xl px-4 py-2 shadow-lg liquid-shine',
                       message.isMine
-                        ? 'bg-primary/90 text-white rounded-br-sm'
-                        : isDarkMode ? 'bg-gray-700/80 text-white rounded-bl-sm' : 'bg-white/80 text-foreground rounded-bl-sm'
+                        ? 'bg-gradient-to-br from-blue-500 to-purple-500 text-white rounded-br-sm'
+                        : isDarkMode ? 'glass-morphism-dark text-white rounded-bl-sm' : 'glass-morphism-light text-foreground rounded-bl-sm'
                     )}
                   >
                     <p className="text-sm leading-relaxed">{message.text}</p>
@@ -153,8 +153,8 @@ const Index = () => {
           </div>
 
           <div className={cn(
-            "backdrop-blur-sm px-6 py-4 rounded-b-3xl",
-            isDarkMode ? "bg-gray-800/50" : "bg-white/50"
+            "px-6 py-4 rounded-b-3xl liquid-shine",
+            isDarkMode ? "glass-morphism-dark" : "glass-morphism-light"
           )}>
             <div className="flex items-center gap-3 max-w-4xl mx-auto">
               <Button variant="ghost" size="icon" className="rounded-full flex-shrink-0">
@@ -170,8 +170,8 @@ const Index = () => {
                 onChange={(e) => setMessageInput(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                 className={cn(
-                  "flex-1 backdrop-blur-sm border-0 rounded-full px-4",
-                  isDarkMode ? "bg-gray-700/60 text-white" : "bg-white/60"
+                  "flex-1 border-0 rounded-full px-4 liquid-shine",
+                  isDarkMode ? "glass-morphism-dark text-white" : "glass-morphism-light"
                 )}
               />
 
@@ -199,8 +199,8 @@ const Index = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className={cn(
-                  "pl-12 backdrop-blur-sm border-0 rounded-full",
-                  isDarkMode ? "bg-gray-700/60 text-white placeholder:text-gray-400" : "bg-white/60"
+                  "pl-12 border-0 rounded-full liquid-shine",
+                  isDarkMode ? "glass-morphism-dark text-white placeholder:text-gray-400" : "glass-morphism-light"
                 )}
               />
             </div>
@@ -233,8 +233,8 @@ const Index = () => {
                   key={chat.id}
                   onClick={() => setSelectedChat(chat.id)}
                   className={cn(
-                    'flex items-center gap-4 px-4 py-4 cursor-pointer transition-all animate-fade-in rounded-2xl backdrop-blur-sm hover:shadow-md',
-                    isDarkMode ? 'bg-gray-800/60 hover:bg-gray-800/80' : 'bg-white/60 hover:bg-white/80'
+                    'flex items-center gap-4 px-4 py-4 cursor-pointer transition-all animate-fade-in rounded-2xl hover:shadow-xl liquid-shine',
+                    isDarkMode ? 'glass-morphism-dark hover:scale-[1.02]' : 'glass-morphism-light hover:scale-[1.02]'
                   )}
                 >
                   <div className="relative">
@@ -279,8 +279,8 @@ const Index = () => {
             </div>
 
             <div className={cn(
-              "backdrop-blur-sm rounded-3xl p-6 space-y-6",
-              isDarkMode ? "bg-gray-800/60" : "bg-white/60"
+              "rounded-3xl p-6 space-y-6 liquid-shine",
+              isDarkMode ? "glass-morphism-dark" : "glass-morphism-light"
             )}>
               <div>
                 <h2 className="text-lg font-semibold mb-4">Профиль</h2>
@@ -400,19 +400,20 @@ const Index = () => {
 
   return (
     <div className={cn(
-      "flex flex-col h-screen overflow-hidden transition-colors duration-300",
+      "flex flex-col h-screen overflow-hidden transition-colors duration-500 relative",
       isDarkMode 
-        ? "bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900" 
-        : "bg-gradient-to-br from-blue-50 via-white to-blue-50"
+        ? "bg-gradient-to-br from-indigo-950 via-purple-950 to-pink-950" 
+        : "bg-gradient-to-br from-blue-100 via-purple-50 to-pink-100"
     )}>
+      <div className="absolute inset-0 liquid-gradient opacity-30 pointer-events-none" />
       <div className="flex-1 overflow-hidden">
         {renderContent()}
       </div>
 
       <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 animate-slide-up">
         <div className={cn(
-          "backdrop-blur-2xl shadow-2xl rounded-full px-6 py-3 flex items-center gap-2",
-          isDarkMode ? "bg-gray-800/70 border border-gray-700/40" : "bg-white/70 border border-white/40"
+          "rounded-full px-6 py-3 flex items-center gap-2 liquid-shine bubble-float shadow-2xl",
+          isDarkMode ? "glass-morphism-dark" : "glass-morphism-light"
         )}>
           {menuItems.map((item) => (
             <button
