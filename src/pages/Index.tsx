@@ -34,6 +34,7 @@ const Index = () => {
   const [selectedChat, setSelectedChat] = useState<number | null>(null);
   const [messageInput, setMessageInput] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const stories: Story[] = [
     { id: 1, name: 'Моя история', avatar: '👤', viewed: false },
@@ -90,7 +91,10 @@ const Index = () => {
     if (selectedChat) {
       return (
         <div className="flex-1 flex flex-col h-full">
-          <div className="bg-white/50 backdrop-blur-sm flex items-center justify-between px-6 py-4 rounded-t-3xl">
+          <div className={cn(
+            "backdrop-blur-sm flex items-center justify-between px-6 py-4 rounded-t-3xl",
+            isDarkMode ? "bg-gray-800/50" : "bg-white/50"
+          )}>
             <div className="flex items-center gap-3">
               <button onClick={() => setSelectedChat(null)} className="lg:hidden">
                 <Icon name="ArrowLeft" size={24} />
@@ -135,7 +139,7 @@ const Index = () => {
                       'max-w-[70%] rounded-2xl px-4 py-2 shadow-md backdrop-blur-sm',
                       message.isMine
                         ? 'bg-primary/90 text-white rounded-br-sm'
-                        : 'bg-white/80 text-foreground rounded-bl-sm'
+                        : isDarkMode ? 'bg-gray-700/80 text-white rounded-bl-sm' : 'bg-white/80 text-foreground rounded-bl-sm'
                     )}
                   >
                     <p className="text-sm leading-relaxed">{message.text}</p>
@@ -148,7 +152,10 @@ const Index = () => {
             </div>
           </div>
 
-          <div className="bg-white/50 backdrop-blur-sm px-6 py-4 rounded-b-3xl">
+          <div className={cn(
+            "backdrop-blur-sm px-6 py-4 rounded-b-3xl",
+            isDarkMode ? "bg-gray-800/50" : "bg-white/50"
+          )}>
             <div className="flex items-center gap-3 max-w-4xl mx-auto">
               <Button variant="ghost" size="icon" className="rounded-full flex-shrink-0">
                 <Icon name="Smile" size={22} />
@@ -162,7 +169,10 @@ const Index = () => {
                 value={messageInput}
                 onChange={(e) => setMessageInput(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                className="flex-1 bg-white/60 backdrop-blur-sm border-0 rounded-full px-4"
+                className={cn(
+                  "flex-1 backdrop-blur-sm border-0 rounded-full px-4",
+                  isDarkMode ? "bg-gray-700/60 text-white" : "bg-white/60"
+                )}
               />
 
               <Button 
@@ -188,7 +198,10 @@ const Index = () => {
                 placeholder="Поиск"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-12 bg-white/60 backdrop-blur-sm border-0 rounded-full"
+                className={cn(
+                  "pl-12 backdrop-blur-sm border-0 rounded-full",
+                  isDarkMode ? "bg-gray-700/60 text-white placeholder:text-gray-400" : "bg-white/60"
+                )}
               />
             </div>
           </div>
@@ -220,8 +233,8 @@ const Index = () => {
                   key={chat.id}
                   onClick={() => setSelectedChat(chat.id)}
                   className={cn(
-                    'flex items-center gap-4 px-4 py-4 cursor-pointer transition-all animate-fade-in rounded-2xl',
-                    'bg-white/60 backdrop-blur-sm hover:bg-white/80 hover:shadow-md'
+                    'flex items-center gap-4 px-4 py-4 cursor-pointer transition-all animate-fade-in rounded-2xl backdrop-blur-sm hover:shadow-md',
+                    isDarkMode ? 'bg-gray-800/60 hover:bg-gray-800/80' : 'bg-white/60 hover:bg-white/80'
                   )}
                 >
                   <div className="relative">
@@ -256,6 +269,116 @@ const Index = () => {
       );
     }
 
+    if (activeSection === 'settings') {
+      return (
+        <div className="flex-1 overflow-y-auto p-6">
+          <div className="max-w-2xl mx-auto space-y-6">
+            <div>
+              <h1 className="text-3xl font-bold mb-2">Настройки</h1>
+              <p className="text-muted-foreground">Управление вашим аккаунтом и приложением</p>
+            </div>
+
+            <div className={cn(
+              "backdrop-blur-sm rounded-3xl p-6 space-y-6",
+              isDarkMode ? "bg-gray-800/60" : "bg-white/60"
+            )}>
+              <div>
+                <h2 className="text-lg font-semibold mb-4">Профиль</h2>
+                <div className="flex items-center gap-4 mb-4">
+                  <Avatar className="w-20 h-20">
+                    <AvatarFallback className="text-3xl bg-gradient-to-br from-blue-400 to-blue-600">👤</AvatarFallback>
+                  </Avatar>
+                  <div className="flex-1">
+                    <h3 className="font-medium text-lg">Иван Иванов</h3>
+                    <p className="text-sm text-muted-foreground">@ivan_ivanov</p>
+                  </div>
+                  <Button variant="outline" className="rounded-full">Редактировать</Button>
+                </div>
+              </div>
+
+              <div className="border-t pt-6">
+                <h2 className="text-lg font-semibold mb-4">Внешний вид</h2>
+                <div className="flex items-center justify-between py-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                      <Icon name={isDarkMode ? 'Moon' : 'Sun'} size={20} className="text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="font-medium">Тёмная тема</h3>
+                      <p className="text-sm text-muted-foreground">Изменить цветовую схему</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setIsDarkMode(!isDarkMode)}
+                    className={cn(
+                      'w-14 h-8 rounded-full transition-colors relative',
+                      isDarkMode ? 'bg-primary' : 'bg-gray-300'
+                    )}
+                  >
+                    <div className={cn(
+                      'w-6 h-6 rounded-full bg-white absolute top-1 transition-transform shadow-md',
+                      isDarkMode ? 'translate-x-7' : 'translate-x-1'
+                    )} />
+                  </button>
+                </div>
+              </div>
+
+              <div className="border-t pt-6 space-y-3">
+                <h2 className="text-lg font-semibold mb-4">Уведомления</h2>
+                {[
+                  { icon: 'Bell', title: 'Уведомления о сообщениях', description: 'Получать push-уведомления' },
+                  { icon: 'Volume2', title: 'Звуки', description: 'Звук при получении сообщений' },
+                  { icon: 'Vibrate', title: 'Вибрация', description: 'Вибрация при уведомлениях' },
+                ].map((item, index) => (
+                  <div key={index} className="flex items-center justify-between py-3">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                        <Icon name={item.icon} size={20} className="text-primary" />
+                      </div>
+                      <div>
+                        <h3 className="font-medium">{item.title}</h3>
+                        <p className="text-sm text-muted-foreground">{item.description}</p>
+                      </div>
+                    </div>
+                    <button className="w-14 h-8 rounded-full bg-gray-300 relative">
+                      <div className="w-6 h-6 rounded-full bg-white absolute top-1 translate-x-1 transition-transform shadow-md" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+
+              <div className="border-t pt-6 space-y-3">
+                <h2 className="text-lg font-semibold mb-4">Конфиденциальность</h2>
+                {[
+                  { icon: 'Lock', title: 'Статус онлайн', description: 'Кто видит когда вы в сети' },
+                  { icon: 'Eye', title: 'Прочитанные', description: 'Отправлять отметки о прочтении' },
+                  { icon: 'Shield', title: 'Двухфакторная аутентификация', description: 'Защита аккаунта' },
+                ].map((item, index) => (
+                  <button key={index} className="w-full flex items-center gap-3 py-3 hover:bg-white/40 rounded-2xl px-3 transition-colors">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                      <Icon name={item.icon} size={20} className="text-primary" />
+                    </div>
+                    <div className="flex-1 text-left">
+                      <h3 className="font-medium">{item.title}</h3>
+                      <p className="text-sm text-muted-foreground">{item.description}</p>
+                    </div>
+                    <Icon name="ChevronRight" size={20} className="text-muted-foreground" />
+                  </button>
+                ))}
+              </div>
+
+              <div className="border-t pt-6">
+                <Button variant="destructive" className="w-full rounded-full">
+                  <Icon name="LogOut" size={20} className="mr-2" />
+                  Выйти из аккаунта
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="flex-1 flex items-center justify-center">
         <div className="text-center space-y-4 opacity-50">
@@ -276,13 +399,21 @@ const Index = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50 overflow-hidden">
+    <div className={cn(
+      "flex flex-col h-screen overflow-hidden transition-colors duration-300",
+      isDarkMode 
+        ? "bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900" 
+        : "bg-gradient-to-br from-blue-50 via-white to-blue-50"
+    )}>
       <div className="flex-1 overflow-hidden">
         {renderContent()}
       </div>
 
       <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 animate-slide-up">
-        <div className="bg-white/70 backdrop-blur-2xl shadow-2xl rounded-full px-6 py-3 flex items-center gap-2 border border-white/40">
+        <div className={cn(
+          "backdrop-blur-2xl shadow-2xl rounded-full px-6 py-3 flex items-center gap-2",
+          isDarkMode ? "bg-gray-800/70 border border-gray-700/40" : "bg-white/70 border border-white/40"
+        )}>
           {menuItems.map((item) => (
             <button
               key={item.id}
@@ -294,7 +425,9 @@ const Index = () => {
                 'w-12 h-12 rounded-full flex items-center justify-center transition-all relative group',
                 activeSection === item.id
                   ? 'bg-primary text-white shadow-lg scale-110'
-                  : 'text-gray-600 hover:bg-white/60 hover:scale-105'
+                  : isDarkMode 
+                    ? 'text-gray-300 hover:bg-gray-700/60 hover:scale-105'
+                    : 'text-gray-600 hover:bg-white/60 hover:scale-105'
               )}
               title={item.label}
             >
