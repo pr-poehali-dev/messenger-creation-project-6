@@ -54,12 +54,41 @@ const Index = () => {
     { id: 7, name: 'Техподдержка', avatar: '🤖', lastMessage: 'Бот: Ваш запрос обработан', time: 'вчера' },
   ];
 
-  const [messages, setMessages] = useState<Message[]>([
-    { id: 1, text: 'Привет! Как дела?', time: '14:20', isMine: false },
-    { id: 2, text: 'Привет! Всё отлично, спасибо! А у тебя?', time: '14:21', isMine: true },
-    { id: 3, text: 'Тоже хорошо! Хотела спросить про завтрашнюю встречу', time: '14:22', isMine: false },
-    { id: 4, text: 'Да, конечно! В 15:00 как договаривались', time: '14:23', isMine: true },
-  ]);
+  const chatMessages: Record<number, Message[]> = {
+    1: [
+      { id: 1, text: 'Привет! Как дела?', time: '14:20', isMine: false },
+      { id: 2, text: 'Привет! Всё отлично, спасибо! А у тебя?', time: '14:21', isMine: true },
+      { id: 3, text: 'Тоже хорошо! Хотела спросить про завтрашнюю встречу', time: '14:22', isMine: false },
+      { id: 4, text: 'Да, конечно! В 15:00 как договаривались', time: '14:23', isMine: true },
+    ],
+    2: [
+      { id: 1, text: 'Коллеги, у нас изменения в расписании', time: '13:30', isMine: false },
+      { id: 2, text: 'Встреча перенесена на 15:00', time: '13:45', isMine: false },
+      { id: 3, text: 'Понял, спасибо!', time: '13:46', isMine: true },
+    ],
+    3: [
+      { id: 1, text: 'Не забудь позвонить', time: '12:30', isMine: false },
+      { id: 2, text: 'Хорошо, мама, позвоню вечером', time: '12:31', isMine: true },
+    ],
+    4: [
+      { id: 1, text: 'Отправил документы на почту', time: '11:15', isMine: false },
+      { id: 2, text: 'Получил, проверю', time: '11:16', isMine: true },
+    ],
+    5: [
+      { id: 1, text: 'Всё готово к презентации', time: 'вчера', isMine: true },
+      { id: 2, text: 'Отличная работа!', time: 'вчера', isMine: false },
+    ],
+    6: [
+      { id: 1, text: 'Спасибо за помощь!', time: 'вчера', isMine: false },
+      { id: 2, text: 'Всегда рад помочь', time: 'вчера', isMine: true },
+    ],
+    7: [
+      { id: 1, text: 'Здравствуйте! Как я могу вам помочь?', time: 'вчера', isMine: false },
+      { id: 2, text: 'Ваш запрос обработан', time: 'вчера', isMine: false },
+    ],
+  };
+
+  const [messages, setMessages] = useState<Record<number, Message[]>>(chatMessages);
 
   const menuItems = [
     { id: 'chats', icon: 'MessageCircle', label: 'Чаты' },
@@ -71,14 +100,18 @@ const Index = () => {
   ];
 
   const handleSendMessage = () => {
-    if (messageInput.trim()) {
+    if (messageInput.trim() && selectedChat) {
+      const currentMessages = messages[selectedChat] || [];
       const newMessage: Message = {
-        id: messages.length + 1,
+        id: currentMessages.length + 1,
         text: messageInput,
         time: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }),
         isMine: true,
       };
-      setMessages([...messages, newMessage]);
+      setMessages({
+        ...messages,
+        [selectedChat]: [...currentMessages, newMessage]
+      });
       setMessageInput('');
     }
   };
@@ -124,9 +157,9 @@ const Index = () => {
             </div>
           </div>
 
-          <div className="flex-1 overflow-y-auto p-6">
+          <div className="flex-1 overflow-y-auto p-6 pb-24">
             <div className="space-y-4 max-w-4xl mx-auto">
-              {messages.map((message) => (
+              {(messages[selectedChat] || []).map((message) => (
                 <div
                   key={message.id}
                   className={cn(
@@ -409,11 +442,12 @@ const Index = () => {
         "absolute inset-0 liquid-gradient pointer-events-none",
         isDarkMode ? "opacity-10" : "opacity-30"
       )} />
-      <div className="flex-1 overflow-hidden">
+      <div className="flex-1 overflow-hidden pb-24">
         {renderContent()}
       </div>
 
-      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 animate-slide-up">
+      {!selectedChat && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 animate-slide-up">
         <div className={cn(
           "rounded-full px-6 py-3 flex items-center gap-2 liquid-shine bubble-float shadow-2xl",
           isDarkMode ? "glass-morphism-dark" : "glass-morphism-light"
@@ -442,7 +476,8 @@ const Index = () => {
             </button>
           ))}
         </div>
-      </div>
+        </div>
+      )}
     </div>
   );
 };
