@@ -186,14 +186,14 @@ const Index = () => {
           </div>
 
           <div className={cn(
-            "fixed bottom-0 left-0 right-0 px-6 py-3 rounded-b-3xl liquid-shine",
-            isDarkMode ? "glass-morphism-dark" : "glass-morphism-light"
+            "fixed bottom-0 left-0 right-0 px-6 py-3 liquid-shine border-t",
+            isDarkMode ? "glass-morphism-dark border-gray-800" : "glass-morphism-light border-gray-200"
           )}>
             <div className="flex items-center gap-2 max-w-4xl mx-auto">
-              <Button variant="ghost" size="icon" className="rounded-full flex-shrink-0 h-9 w-9">
+              <Button variant="ghost" size="icon" className={cn("rounded-full flex-shrink-0 h-9 w-9", isDarkMode ? "text-gray-300 hover:text-white" : "")}>
                 <Icon name="Smile" size={20} />
               </Button>
-              <Button variant="ghost" size="icon" className="rounded-full flex-shrink-0 h-9 w-9">
+              <Button variant="ghost" size="icon" className={cn("rounded-full flex-shrink-0 h-9 w-9", isDarkMode ? "text-gray-300 hover:text-white" : "")}>
                 <Icon name="Paperclip" size={20} />
               </Button>
               
@@ -204,7 +204,7 @@ const Index = () => {
                 onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                 className={cn(
                   "flex-1 border-0 rounded-full px-4 h-9 liquid-shine",
-                  isDarkMode ? "glass-morphism-dark text-white" : "glass-morphism-light"
+                  isDarkMode ? "glass-morphism-dark text-white placeholder:text-gray-400" : "glass-morphism-light"
                 )}
               />
 
@@ -239,8 +239,8 @@ const Index = () => {
             </div>
           </div>
 
-          <div className="px-6 pb-4">
-            <div className="flex gap-4 overflow-x-auto pb-2" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+          <div className="px-6 pb-4 overflow-hidden">
+            <div className="flex gap-4 overflow-x-auto pb-2 -mx-6 px-6" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
               {stories.map((story) => (
                 <div key={story.id} className="flex flex-col items-center gap-2 cursor-pointer group flex-shrink-0">
                   <div className={cn(
