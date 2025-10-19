@@ -333,29 +333,25 @@ const Index = () => {
 
               <div className="border-t pt-6">
                 <h2 className={cn("text-lg font-semibold mb-4", isDarkMode ? "text-white" : "")}>Внешний вид</h2>
-                <div className="flex items-center justify-between py-3">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                      <Icon name={isDarkMode ? 'Moon' : 'Sun'} size={20} className="text-primary" />
-                    </div>
-                    <div>
-                      <h3 className={cn("font-medium", isDarkMode ? "text-white" : "")}>Тёмная тема</h3>
-                      <p className={cn("text-sm", isDarkMode ? "text-gray-400" : "text-muted-foreground")}>Изменить цветовую схему</p>
-                    </div>
+                <button
+                  onClick={() => setIsDarkMode(!isDarkMode)}
+                  className={cn(
+                    "w-full flex items-center gap-3 py-3 px-3 rounded-2xl transition-all hover:scale-[1.02]",
+                    isDarkMode ? "bg-primary/10 hover:bg-primary/20" : "bg-gray-100 hover:bg-gray-200"
+                  )}
+                >
+                  <div className={cn(
+                    "w-10 h-10 rounded-full flex items-center justify-center transition-colors",
+                    isDarkMode ? "bg-primary/20" : "bg-primary/10"
+                  )}>
+                    <Icon name={isDarkMode ? 'Moon' : 'Sun'} size={20} className="text-primary" />
                   </div>
-                  <button
-                    onClick={() => setIsDarkMode(!isDarkMode)}
-                    className={cn(
-                      'w-14 h-8 rounded-full transition-colors relative',
-                      isDarkMode ? 'bg-primary' : 'bg-gray-300'
-                    )}
-                  >
-                    <div className={cn(
-                      'w-6 h-6 rounded-full absolute top-1 transition-transform shadow-md',
-                      isDarkMode ? 'bg-gray-900 translate-x-7' : 'bg-white translate-x-1'
-                    )} />
-                  </button>
-                </div>
+                  <div className="flex-1 text-left">
+                    <h3 className={cn("font-medium", isDarkMode ? "text-white" : "")}>{isDarkMode ? 'Тёмная тема' : 'Светлая тема'}</h3>
+                    <p className={cn("text-sm", isDarkMode ? "text-gray-400" : "text-muted-foreground")}>Нажмите для изменения</p>
+                  </div>
+                  <Icon name="ChevronRight" size={20} className={cn(isDarkMode ? "text-gray-400" : "text-muted-foreground")} />
+                </button>
               </div>
 
               <div className="border-t pt-6 space-y-3">
